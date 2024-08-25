@@ -3,9 +3,16 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const cors=require("cors")
 
+const corsOptions = {
+    origin: '*', // Allow requests from any origin (useful for testing)
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+};
+
+app.use(cors(corsOptions));
+
 // Middleware to parse JSON requests
 app.use(express.json());
-app.use(cors());
 // POST Method Endpoint: /bfhl
 app.post('/bfhl', (req, res) => {
     const { data } = req.body;
