@@ -5,7 +5,7 @@ const cors=require("cors")
 
 // Middleware to parse JSON requests
 app.use(express.json());
-app.ise(cors());
+app.use(cors());
 // POST Method Endpoint: /bfhl
 app.post('/bfhl', (req, res) => {
     const { data } = req.body;
