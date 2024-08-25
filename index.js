@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cors=require("cors")
 
 // Middleware to parse JSON requests
 app.use(express.json());
-
+app.ise(cors());
 // POST Method Endpoint: /bfhl
 app.post('/bfhl', (req, res) => {
     const { data } = req.body;
