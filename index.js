@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const cors=require("cors")
+const cors = require('cors');
 
 // Middleware to parse JSON requests
 app.use(express.json());
 app.use(cors());
+
 // POST Method Endpoint: /bfhl
 app.post('/bfhl', (req, res) => {
     const { data } = req.body;
@@ -13,6 +14,7 @@ app.post('/bfhl', (req, res) => {
     const email = "john@xyz.com";
     const roll_number = "ABCD123";
     
+    // Validate input
     if (!data || !Array.isArray(data)) {
         return res.status(400).json({ 
             is_success: false, 
@@ -26,13 +28,18 @@ app.post('/bfhl', (req, res) => {
     }
 
     // Separate numbers and alphabets
-    const numbers = data.filter(item => !isNaN(item.toString()));
-    const alphabets = data.filter(item => isNaN(item));
+    const numbers = data.filter(item => !isNaN(Number(item)));
+    const alphabets = data.filter(item => isNaN(Number(item)) && /^[a-zA-Z]$/.test(item));
+    
+    // Filter lowercase alphabets
     const lowercaseAlphabets = alphabets.filter(item => /^[a-z]$/.test(item));
     
     // Find the highest lowercase alphabet
-    const highestLowercaseAlphabet = lowercaseAlphabets.length > 0 ? [lowercaseAlphabets.sort().reverse()[0]] : [];
+    const highestLowercaseAlphabet = lowercaseAlphabets.length > 0 
+        ? [lowercaseAlphabets.sort().reverse()[0]] 
+        : [];
 
+    // Send response
     res.json({
         is_success: true,
         user_id,
@@ -41,7 +48,7 @@ app.post('/bfhl', (req, res) => {
         numbers,
         alphabets,
         highest_lowercase_alphabet: highestLowercaseAlphabet,
-    });
+    });
 });
 
 // GET Method Endpoint: /bfhl
