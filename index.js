@@ -14,11 +14,19 @@ app.post('/bfhl', (req, res) => {
     const roll_number = "ABCD123";
     
     if (!data || !Array.isArray(data)) {
-        return res.status(400).json({ is_success: false, user_id, email, roll_number, numbers: [], alphabets: [], highest_lowercase_alphabet: [] });
+        return res.status(400).json({ 
+            is_success: false, 
+            user_id, 
+            email, 
+            roll_number, 
+            numbers: [], 
+            alphabets: [], 
+            highest_lowercase_alphabet: [] 
+        });
     }
 
     // Separate numbers and alphabets
-    const numbers = data.filter(item => !isNaN(item));
+    const numbers = data.filter(item => !isNaN(item.toString()));
     const alphabets = data.filter(item => isNaN(item));
     const lowercaseAlphabets = alphabets.filter(item => /^[a-z]$/.test(item));
     
@@ -33,7 +41,7 @@ app.post('/bfhl', (req, res) => {
         numbers,
         alphabets,
         highest_lowercase_alphabet: highestLowercaseAlphabet,
-    });
+    });
 });
 
 // GET Method Endpoint: /bfhl
