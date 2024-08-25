@@ -1,14 +1,15 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cors=require("cors")
 
 // Middleware to parse JSON requests
 app.use(express.json());
-
+app.use(cors());
 // POST Method Endpoint: /bfhl
 app.post('/bfhl', (req, res) => {
     const { data } = req.body;
-    const user_id = "john_doe_17091999";
+    const user_id = "joshn_doe_17091999";
     const email = "john@xyz.com";
     const roll_number = "ABCD123";
     
